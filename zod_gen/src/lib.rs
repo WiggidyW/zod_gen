@@ -285,6 +285,13 @@ impl ZodSchema for serde_json::Value {
     }
 }
 
+#[cfg(feature = "rust_decimal")]
+impl ZodSchema for rust_decimal::Decimal {
+    fn zod_schema() -> String {
+        zod_number().to_string()
+    }
+}
+
 impl<T: ZodSchema> ZodObjectSchema for T {}
 
 #[cfg(test)]
