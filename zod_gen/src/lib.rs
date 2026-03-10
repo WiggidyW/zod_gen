@@ -292,6 +292,13 @@ impl ZodSchema for rust_decimal::Decimal {
     }
 }
 
+#[cfg(feature = "indexmap")]
+impl<T: ZodSchema> ZodSchema for indexmap::IndexMap<String, T> {
+    fn zod_schema() -> String {
+        zod_record(&T::zod_schema())
+    }
+}
+
 impl<T: ZodSchema> ZodObjectSchema for T {}
 
 #[cfg(test)]
